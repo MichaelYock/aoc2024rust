@@ -3,7 +3,7 @@ use advent_of_code::VecTExt;
 advent_of_code::solution!(4);
 
 pub fn part_one(input: &str) -> Option<u32> {
-    let test = "MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\nXXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX";
+    // let test = "MMMSXXMASM\nMSAMXMSMSA\nAMXSXMAAMM\nMSAMASMSMX\nXMASAMXAMM\nXXAMMXXAMA\nSMSMSASXSS\nSAXAMASAAA\nMAMMMXMMMM\nMXMXAXMASX";
 
     let grid: Vec<Vec<_>> = input.lines().map(|line| line.chars().collect()).collect();
 
@@ -38,7 +38,35 @@ pub fn part_one(input: &str) -> Option<u32> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    None
+    //let test = ".M.S......\n..A..MSMS.\n.M.S.MAA..\n..A.ASMSM.\n.M.S.M....\n..........\nS.S.S.S.S.\n.A.A.A.A..\nM.M.M.M.M.\n..........";
+    
+    let grid: Vec<Vec<_>> = input.lines().map(|line| line.chars().collect()).collect();
+
+    let mut counter = 0;
+
+    for r in 0..grid.len() {
+        for c in 0..grid[0].len() {
+            if grid[r][c] == 'A' {
+                let (r,c) = (r as isize, c as isize);
+
+                if let (Some(&tl),Some(&tr),Some(&bl),Some(&br)) = (
+                    grid.iget(r-1).and_then(|e| e.iget(c-1)),
+                    grid.iget(r+1).and_then(|e| e.iget(c-1)),
+                    grid.iget(r-1).and_then(|e| e.iget(c+1)),
+                    grid.iget(r+1).and_then(|e| e.iget(c+1))
+                ) {
+                    let fwd = (tl == 'M' && br == 'S') || (tl == 'S' && br == 'M');
+                    let back = (tr == 'M' && bl == 'S') || (tr == 'S' && bl == 'M');
+
+                    if fwd && back {
+                        counter += 1;
+                    }
+                }
+            }
+        }
+    }
+
+    Some(counter)
 }
 
 #[cfg(test)]
