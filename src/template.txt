@@ -1,10 +1,16 @@
 advent_of_code::solution!(%DAY_NUMBER%);
 
+//use std::fs;
+
 pub fn part_one(input: &str) -> Option<u32> {
+    //let test = fs::read_to_string("./data/examples/05.txt").unwrap();
+
     None
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
+    //let test = fs::read_to_string("./data/examples/05.txt").unwrap();
+
     None
 }
 
